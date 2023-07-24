@@ -1,0 +1,45 @@
+{% extends 'main.html' %}
+{% block title %}
+    sign up
+{% endblock title %}
+
+{% block content %}
+    <h1>sign up</h1>
+    <div class="container mb-4 justify-content-center">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <div>{{ form.username }}</div>
+            </div>
+            <hr>
+            <div class="mb-3">
+                <div>{{ form.email }}</div>
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <hr>
+            <div class="mb-3">
+                <div>{{ form.password1 }}</div>
+            </div>
+            <div class="mb-3">
+                <div>{{ form.password2 }}</div>
+            </div>
+            <hr>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div>
+            <div>
+                {% if form.errors or form.non_field_errors %}
+                    <div>
+                        {% for field in form %}
+                            {{ field.errors }}
+                        {% endfor %}
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-dark">Submit</button>
+        </form>
+    </div>
+
+{% endblock content %}

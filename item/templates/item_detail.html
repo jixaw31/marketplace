@@ -1,0 +1,74 @@
+{% extends 'main.html' %}
+{% block title %}
+    {{ item.name }}
+{% endblock title %}
+
+{% block content %}
+    <h1>item details</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                {% if item.image %}
+                    <img src="{{ item.image.url }}" class="img-fluid" alt="">
+                {% endif %}
+            </div>
+            <div class="col-5">
+                <h2>{{ item.name }}</h2>
+                <p>{{ item.descreption }}</p>
+                <p>{{ item.category }}</p>
+                <strong class="my-2">{{ item.price }}</strong>
+                <br>
+                <hr>
+                <a href="#" class="btn-lg text-decoration-none py-2 btn-success">
+                    <strong>shop</strong>
+                </a>
+                <hr>
+                {% if request.user == item.created_by %}
+                    <a href="{% url 'item:edit-item' item.id %}" class="btn-lg px-3 text-decoration-none btn-primary">
+                        <strong>edit</strong>
+                    </a>
+                    <hr>
+                    <a href="{% url 'item:delete-item' item.id %}" class="btn-lg px-3 text-decoration-none btn-danger">
+                        <strong>delete</strong>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="">
+            <h1>related items: </h1>
+            <div class="row">
+                {% for related_item in related_items %}
+                    <div class=" col-4">
+                        <h1>{{ related_item.name }}</h1>
+                        <p>{{ related_item.descreption }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6"></div>
+            <div class="bg-dark text-light col-6 rounded">
+                <h1 class="m-2">{{ item.name }}'s conversation</h1>
+                {% for message in conversation_messages %}
+                    <br>
+                    <div class="d-flex justify-content-between">
+                        <p><strong>-{{ message.sent_by }}: </strong>{{ message.text }}</p>
+                        <small class="text-muted">{{ message.sent_at|timesince }}</small>
+                    </div>
+                {% endfor %}
+                <hr class="my-3">
+                <br>
+                <div class="px-2">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <button type="submit">send</button>
+                        {{ form.as_p }}
+                    </form>
+                </div>
+            </div>
+            <hr class="my-3">
+        </div>
+
+    </div>
+{% endblock content %}

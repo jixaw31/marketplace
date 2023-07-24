@@ -1,0 +1,11 @@
+<div class="card bg-dark text-white-50 p-1" style="width: auto;height: auto">
+    <ul>
+        {% for category in categories %}
+            <li class="d-flex justify-content-between">
+                <a href="{% url 'base:index' %}"
+                   class="text-decoration-none btn btn-outline-light">{{ category.name }}</a>
+                <strong class="mx-2">{{ category.items.count }}</strong>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

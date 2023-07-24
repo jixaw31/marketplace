@@ -1,0 +1,86 @@
+{% extends 'main.html' %}
+{% block title %}
+    home page
+{% endblock title %}
+{% block content %}
+    <div class="mb-4">
+        <br>
+        <h1>SOMETHING</h1>
+        <br>
+        <hr>
+        <br>
+        <div class="my-2 px-5 container text-center ">
+            <a class="btn-lg btn-success text-decoration-none px-5 py-3" href="{% url 'base:add-item' %}"><strong
+                    class="text-capitalize">add
+                item</strong></a>
+        </div>
+        <br>
+        <br>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <div class="card bg-dark text-white-50 p-1" style="width: auto;height: auto">
+                    <ul class="px-1">
+                        {% for category in categories %}
+                            <li class="d-flex justify-content-between">
+                                <p>{{ category.id }}</p>
+                                <a href="{% url 'base:index' %}?query={{ category.name }}"
+                                   class="
+                                           {% if category.name == query %}
+                                            bg-secondary
+                                           {% endif %}
+                                           text-decoration-none btn btn-outline-light">
+                                    {{ category.name }}
+                                </a>
+                                <strong class="mx-2">{{ category.items.count }}</strong>
+                            </li>
+                        {% endfor %}
+                        <hr>
+                        <a class="btn-lg btn-warning text-decoration-none my-5  "
+                           href="{% url 'base:index' %}">clear</a>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-8 mb-4">
+                <div class="row container-sm">
+                    {% for item in items %}
+                        <div class="col-4 ">
+                            <div class="card bg-dark text-white-50 my-2 shadow" style="width: auto;">
+                                {% if item.image %}
+                                    <img src="{{ item.image.url }}" class="card-img-top m-1 "
+                                         style="width: auto;height: 25rem"
+                                         alt="...">
+                                {% endif %}
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ item.name }}</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up
+                                        the
+                                        bulk
+                                        of the
+                                        card's content.</p>
+                                    <a href="{% url 'item:item-detail' item.id %}" class="btn btn-secondary">details</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+            <div class="col-2">
+                {% for category in categories %}
+                    <div class="card bg-dark text-white-50 p-1" style="width: auto;height: auto">
+                        <h4>{{ category.name }}</h4>
+                        <p>Some quick example text to build on the card title and
+                            make up the bulk of the card's content.
+                        </p>
+                        <hr>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+
+    </div>
+{% endblock content %}
